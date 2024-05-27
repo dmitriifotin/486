@@ -13,7 +13,7 @@ while True:
     #file input
     file_input = input("Enter file name: ")
     #ask if forwarding or non-forwarding
-    print_message = input("Select mode:\n1 - Functional Simulator only\n2 - Functional Simulator + non-forwarding Timing Simulator/n3 - Functional Simulator + forwarding Timing Simulator")
+    print_message = input("Select mode:\n1 - Functional Simulator only\n2 - Functional Simulator + non-forwarding Timing Simulator\n3 - Functional Simulator + forwarding Timing Simulator")
     while print_message != '1' and print_message != '2' and print_message != '3':
         print_message = input("Invalid Input! Select mode:\n1 - Functional Simulator only\n2 - Functional Simulator + non-forwarding Timing Simulator\n3 - Functional Simulator + forwarding Timing Simulator") 
     
@@ -113,7 +113,7 @@ while True:
             elif pipeline[0][0:5] == 0b010000:
                 print(pipeline[0][0:5])
                 
-            #MULI
+            #HALT
             elif pipeline[0][0:5] == 0b010001:
                 print(pipeline[0][0:5])
                 
