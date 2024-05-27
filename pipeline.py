@@ -48,7 +48,6 @@ while True:
             #ADD
             if pipeline[0][0:5] == 0b000000:
                 print(pipeline[0][0:5])
-                #HI
                 
             #ADDI
             elif pipeline[0][0:5] == 0b000001:
