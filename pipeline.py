@@ -4,7 +4,7 @@ Created on Wed Mar  6 19:53:11 2024
 
 @author: 
     Dmitrii Fotin       <dfotin@pdx.edu>
-    John Michael Mertz  <jmertz@pdx.edu>  
+    John Mertz  <jmertz@pdx.edu>  
     Josh Varughese       <jv23@pdx.edu>
 """
 
