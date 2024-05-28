@@ -4,7 +4,7 @@ Created on Wed Mar  6 19:53:11 2024
 
 @author: 
     Dmitrii Fotin       <dfotin@pdx.edu>
-    John Mertz  <jmertz@pdx.edu>  
+    John Michael Mertz  <jmertz@pdx.edu>  
     Josh Varughese       <jv23@pdx.edu>
 """
 
@@ -28,6 +28,7 @@ while True:
         while True:
             #read file line by line
             data = file.readline()
+            print(data)
             #if file is empty, exit and ask for next file input
             if not data:
                 break
@@ -42,8 +43,22 @@ while True:
             #for commands that are not 8 or 9, unpack line into command and hex address
             else:
                 address = data.zfill(8)
+                print(address) 
+                address = address.replace("\n", "")
+                pipeline.append("")
+                for i in address:
+                    print(i)
+                    j = bin(int(i,16))[2:].zfill(4)
+                    print(j)
+                    pipeline[-1] += j
+                    #try:
+                    #    print(f"0b{int(i,16):04b}")
+                    #except:
+                    #    pass
+                #print(address)
+                
                 #convert address to binary
-                pipeline[0] = ''.join(bin(int(i,16))[2:].zfill(4) for i in address)
+                #`pipeline[0] = ''.join(bin(int(i,16))[2:].zfill(4) for i in address)
             
             #ADD
             if pipeline[0][0:5] == 0b000000:
@@ -68,10 +83,15 @@ while True:
             #MULI
             elif pipeline[0][0:5] == 0b000101:
                 print(pipeline[0][0:5])
-                
+            
+            ###################
+
+
+
             #OR
             elif pipeline[0][0:5] == 0b000110:
                 print(pipeline[0][0:5])
+
                 
             #ORI
             elif pipeline[0][0:5] == 0b000111:
@@ -92,7 +112,11 @@ while True:
             #XORI
             elif pipeline[0][0:5] == 0b001011:
                 print(pipeline[0][0:5])
-                
+            
+
+
+            #################
+
             #LDW
             elif pipeline[0][0:5] == 0b001100:
                 print(pipeline[0][0:5])
