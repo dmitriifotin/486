@@ -33,7 +33,8 @@ while True:
                 
                 # ADD
                 if opcode == 0b000000:
-                    print("\nADD command found:", pipeline[0][:6])
+                	# Print the initial register contents
+                    print("\nADD:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
                     print("Source Register Contents (rs): ", rs)
                     rt = pipeline[0][11:16]
@@ -41,109 +42,114 @@ while True:
                     rd = pipeline[0][16:21]
                     print("Destination Register Contents: ", rd)
                     
-                    # convert to decimal to perform addition
+                    # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     rt_int = int(rt, 2)
                     rd_int = rs_int + rt_int
                     
-                    # convert back to binary to display
+                    # Convert back to binary to display
                     rd = bin(rd_int)[2:].zfill(5)
                     print("Updated Destination Register Contents: ", rd)
                     
                 # ADDI
                 elif opcode == 0b000001:
-                    print("\nADDI command found:", pipeline[0][:6])
+                	# Print the initial register contents
+                    print("\nADDI:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
-                    print("Source Register Contents (rs): ", rs)
+                    print("Source Register Contents (rs):", rs)
                     rt = pipeline[0][11:16]
-                    print("Destination Register Contents: ", rt)
+                    print("Destination Register Contents:", rt)
                     imm = pipeline[0][16:]
-                    print("Immediate Register Contents (imm): ", imm)
+                    print("Immediate Register Contents (imm):", imm)
                     
-                    # convert to decimal to perform addition
+                    # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     imm_int = int(imm, 2)
                     rt_int = rs_int + imm_int
                     
-                    # convert back to binary to display
+                    # Convert back to binary to display
                     rt = bin(rt_int)[2:].zfill(5)
-                    print("Updated Destination Register Contents: ", rt)
+                    print("Updated Destination Register Contents:", rt)
                     
                 # SUB
                 elif opcode == 0b000010:
-                    print("\nSUB command found:", pipeline[0][:6])
+                	# Print the initial register contents
+                    print("\nSUB:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
-                    print("Source Register Contents (rs): ", rs)
+                    print("Source Register Contents (rs):", rs)
                     rt = pipeline[0][11:16]
-                    print("Source Register Contents (rt): ", rt)
+                    print("Source Register Contents (rt):", rt)
                     rd = pipeline[0][16:21]
-                    print("Destination Register Contents: ", rd)
+                    print("Destination Register Contents:", rd)
                     
-                    # convert to decimal to perform subtraction
+                    # Convert to decimal to perform subtraction
                     rs_int = int(rs, 2)
                     rt_int = int(rt, 2)
                     rd_int = rs_int - rt_int
                     
-                    # convert back to binary to display
+                    # Convert back to binary to display
                     rd = bin(rd_int)[2:].zfill(5)
-                    print("Updated Destination Register Contents: ", rd)
+                    print("Updated Destination Register Contents:", rd)
                     
                 # SUBI
                 elif opcode == 0b000011:
-                    print("\nSUBI command found:", pipeline[0][:6])
+                	# Print the initial register contents
+                    print("\nSUBI:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
-                    print("Source Register Contents (rs): ", rs)
+                    print("Source Register Contents (rs):", rs)
                     rt = pipeline[0][11:16]
-                    print("Destination Register Contents: ", rt)
+                    print("Destination Register Contents:", rt)
                     imm = pipeline[0][16:]
-                    print("Immediate Register Contents (imm): ", imm)
+                    print("Immediate Register Contents (imm):", imm)
                     
-                    # convert to decimal to perform addition
+                    # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     imm_int = int(imm, 2)
                     rt_int = rs_int - imm_int
                     
-                    # convert back to binary to display
+                    # Convert back to binary to display
                     rt = bin(rt_int)[2:].zfill(5)
-                    print("Updated Destination Register Contents: ", rt)
+                    print("Updated Destination Register Contents:", rt)
                     
                 # MUL
                 elif opcode == 0b000100:
-                    print("\nMUL command found:", pipeline[0][:6])
+                	# Print the initial register contents
+                    print("\nMUL:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
-                    print("Source Register Contents (rs): ", rs)
+                    print("Source Register Contents (rs):", rs)
                     rt = pipeline[0][11:16]
-                    print("Source Register Contents (rt): ", rt)
+                    print("Source Register Contents (rt):", rt)
                     rd = pipeline[0][16:21]
-                    print("Destination Register Contents: ", rd)
+                    print("Destination Register Contents:", rd)
                     
-                    # convert to decimal to perform subtraction
+                    # Convert to decimal to perform subtraction
                     rs_int = int(rs, 2)
                     rt_int = int(rt, 2)
                     rd_int = rs_int * rt_int
                     
-                    # convert back to binary to display
+                    # Convert back to binary to display
                     rd = bin(rd_int)[2:].zfill(5)
-                    print("Updated Destination Register Contents: ", rd)
+                    print("Updated Destination Register Contents:", rd)
                     
                 # MULI
                 elif opcode == 0b000101:
-                    print("\nMULI command found:", pipeline[0][:6])
+                	# Print the initial register contents
+                    print("\nMULI:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
-                    print("Source Register Contents (rs): ", rs)
+                    print("Source Register Contents (rs):", rs)
                     rt = pipeline[0][11:16]
-                    print("Destination Register Contents: ", rt)
+                    print("Destination Register Contents:", rt)
                     imm = pipeline[0][16:]
-                    print("Immediate Register Contents (imm): ", imm)
+                    print("Immediate Register Contents (imm):", imm)
                     
-                    # convert to decimal to perform addition
+                    # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     imm_int = int(imm, 2)
                     rt_int = rs_int * imm_int
                     
-                    # convert back to binary to display
+                    # Convert back to binary to display
                     rt = bin(rt_int)[2:].zfill(5)
-                    print("Updated Destination Register Contents: ", rt)
+                    print("Updated Destination Register Contents:", rt)
                     
 #               ------------End Josh's Portion-------------
               
