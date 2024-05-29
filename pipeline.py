@@ -43,109 +43,107 @@ while True:
             #for commands that are not 8 or 9, unpack line into command and hex address
             else:
                 address = data.zfill(8)
-                print(address) 
+                print("Address Read: " + address) 
                 address = address.replace("\n", "")
                 pipeline.append("")
-                for i in address:
-                    print(i)
-                    j = bin(int(i,16))[2:].zfill(4)
-                    print(j)
-                    pipeline[-1] += j
-                    #try:
-                    #    print(f"0b{int(i,16):04b}")
-                    #except:
-                    #    pass
-                #print(address)
                 
                 #convert address to binary
-                #`pipeline[0] = ''.join(bin(int(i,16))[2:].zfill(4) for i in address)
+                for i in address:
+                    #print(i)
+                    j = bin(int(i,16))[2:].zfill(4)
+                    #print(j)
+                    pipeline[-1] += j
+                    
+                print("Address in binary: " + pipeline[-1])
+                #pipeline[0] = ''.join(bin(int(i,16))[2:].zfill(4) for i in address)
             
             #ADD
-            if pipeline[0][0:5] == 0b000000:
-                print(pipeline[0][0:5])
+            if pipeline[-1][0:6] == "000000":
+            	print(pipeline[-1][0:6])
                 
             #ADDI
-            elif pipeline[0][0:5] == 0b000001:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000001":
+            	print(pipeline[-1][0:6])
                 
             #SUB
-            elif pipeline[0][0:5] == 0b000010:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000010":
+            	print(pipeline[-1][0:6])
                 
             #SUBI
-            elif pipeline[0][0:5] == 0b000011:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000011":
+            	print(pipeline[-1][0:6])
                 
             #MUL
-            elif pipeline[0][0:5] == 0b000100:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000100":
+            	print(pipeline[-1][0:6])
                 
             #MULI
-            elif pipeline[0][0:5] == 0b000101:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000101":
+            	print(pipeline[-1][0:6])
             
             ###################
 
 
 
             #OR
-            elif pipeline[0][0:5] == 0b000110:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000110":
+            	print(pipeline[-1][0:6])
 
                 
             #ORI
-            elif pipeline[0][0:5] == 0b000111:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "000111":
+            	print(pipeline[-1][0:6])
                 
             #AND
-            elif pipeline[0][0:5] == 0b001000:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001000":
+            	print(pipeline[-1][0:6])
                 
             #ANDI
-            elif pipeline[0][0:5] == 0b001001:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001001":
+            	print(pipeline[-1][0:6])
                 
             #XOR
-            elif pipeline[0][0:5] == 0b001010:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001010":
+            	print(pipeline[-1][0:6])
                 
             #XORI
-            elif pipeline[0][0:5] == 0b001011:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001011":
+            	print(pipeline[-1][0:6])
             
 
 
             #################
 
             #LDW
-            elif pipeline[0][0:5] == 0b001100:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001100":
+            	print(pipeline[-1][0:6])
                 
             #STW
-            elif pipeline[0][0:5] == 0b001101:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001101":
+            	print(pipeline[-1][0:6])
                 
             #BZ
-            elif pipeline[0][0:5] == 0b001110:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001110":
+            	print(pipeline[-1][0:6])
                 
             #BEQ
-            elif pipeline[0][0:5] == 0b001111:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "001111":
+            	print(pipeline[-1][0:6])
                 
             #JR
-            elif pipeline[0][0:5] == 0b010000:
-                print(pipeline[0][0:5])
-                
+            elif pipeline[-1][0:6] == "010000":
+            	print(pipeline[-1][0:6]) 
+            	
             #HALT
-            elif pipeline[0][0:5] == 0b010001:
-                print(pipeline[0][0:5])
+            elif pipeline[-1][0:6] == "010001":
+            	print(pipeline[-1][0:6])
                 
             else:
-                print("Invalid opcode entered for given command line: " + data)
-                continue
+            	print(pipeline[-1][0:6])
+            	print("Invalid opcode entered for given command line: " + data)
+            	continue
                 
         print("End of file reached")
-        if input("Exit program? y/n\n") == 'y':
-            break
-        
+        #if input("Exit program? y/n\n") == 'y':
+        #    break
+        break
