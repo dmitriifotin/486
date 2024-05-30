@@ -49,134 +49,141 @@ while True:
                 pipeline.append("")
                 
                 #convert address to binary
-                for i in address:
-                    #print(i)
-                    j = bin(int(i,16))[2:].zfill(4)
-                    #print(j)
-                    pipeline[-1] += j
+                #for i in address:
+                #    #print(i)
+                #    j = bin(int(i,16))[2:].zfill(4)
+                #    #print(j)
+                #    pipeline[0] += j
                     
-                print("Address in binary: " + pipeline[-1])
-                #pipeline[0] = ''.join(bin(int(i,16))[2:].zfill(4) for i in address)
-            
+                pipeline[0] = ''.join(bin(int(i,16))[2:].zfill(4) for i in address)
+                print("Address in binary: " + pipeline[0])
+                
             #ADD
-            if pipeline[-1][0:6] == "000000":
-            	print(pipeline[-1][0:6])
+            if pipeline[0][0:6] == "000000":
+            	print(pipeline[0][0:6])
                 
             #ADDI
-            elif pipeline[-1][0:6] == "000001":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "000001":
+            	print(pipeline[0][0:6])
                 
             #SUB
-            elif pipeline[-1][0:6] == "000010":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "000010":
+            	print(pipeline[0][0:6])
                 
             #SUBI
-            elif pipeline[-1][0:6] == "000011":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "000011":
+            	print(pipeline[0][0:6])
                 
             #MUL
-            elif pipeline[-1][0:6] == "000100":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "000100":
+            	print(pipeline[0][0:6])
                 
             #MULI
-            elif pipeline[-1][0:6] == "000101":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "000101":
+            	print(pipeline[0][0:6])
             
             ###################
 
 
 
             #OR
-            elif pipeline[-1][0:6] == "000110":
+            elif pipeline[0][0:6] == "000110":
             	
-            	print("OR: " + pipeline[-1][0:6])
+            	print("OR: " + pipeline[0][0:6])
             	#rs = 
-            	print("Rs: " + pipeline[-1][6:11])
+            	print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
             	#rt = 
-            	print("Rt: " + pipeline[-1][11:16])
+            	print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
             	#rd = 
-            	print("Rd: " + pipeline[-1][16:21])
+            	print("Rd: " + pipeline[0][16:21] + f' (R{int(pipeline[0][16:21], 2)})')
  
             #ORI
-            elif pipeline[-1][0:6] == "000111":
-            	print("ORi: " + pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "000111":
+            	print("ORi: " + pipeline[0][0:6])
             	#rs = 
-            	print("Rs: " + pipeline[-1][6:11])
+            	print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
             	#rt = 
-            	print("Rt: " + pipeline[-1][11:16])
-            	#rd = 
-            	print("Imm: " + pipeline[-1][16:32])
+            	print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+            	#imm = int(pipeline[0][16:31], 2)
+            	print("Imm: ", int(pipeline[0][16:31], 2))
                 
             #AND
-            elif pipeline[-1][0:6] == "001000":
-            	print("AND: " + pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001000":
+            	print("AND: " + pipeline[0][0:6])
             	#rs = 
-            	print("Rs: " + pipeline[-1][6:11])
+            	print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
             	#rt = 
-            	print("Rt: " + pipeline[-1][11:16])
+            	print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
             	#rd = 
-            	print("Rd: " + pipeline[-1][16:21])
+            	print("Rd: " + pipeline[0][16:21] + f' (R{int(pipeline[0][16:21], 2)})')
                 
             #ANDI
-            elif pipeline[-1][0:6] == "001001":
-            	print("ANDi: " + pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001001":
+            	print("ANDi: " + pipeline[0][0:6])
             	#rs = 
-            	print("Rs: " + pipeline[-1][6:11])
+            	print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
             	#rt = 
-            	print("Rt: " + pipeline[-1][11:16])
-            	#rd = 
-            	print("Imm: " + pipeline[-1][16:32])
+            	print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+            	#imm = int(pipeline[0][16:31], 2)
+            	print("Imm: ", int(pipeline[0][16:31], 2))
                 
             #XOR
-            elif pipeline[-1][0:6] == "001010":
-            	print("XOR: " + pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001010":
+            	print("XOR: " + pipeline[0][0:6])
             	#rs = 
-            	print("Rs: " + pipeline[-1][6:11])
+            	print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
             	#rt = 
-            	print("Rt: " + pipeline[-1][11:16])
+            	print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
             	#rd = 
-            	print("Rd: " + pipeline[-1][16:22])
+            	print("Rd: " + pipeline[0][16:22] + f' (R{int(pipeline[0][16:21], 2)})')
                 
             #XORI
-            elif pipeline[-1][0:6] == "001011":
-            	print("XORi: " + pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001011":
+            	print("XORi: " + pipeline[0][0:6])
             	#rs = 
-            	print("Rs: " + pipeline[-1][6:11])
+            	print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
             	#rt = 
-            	print("Rt: " + pipeline[-1][11:16])
-            	#rd = 
-            	print("Imm: " + pipeline[-1][16:31])
+            	print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+            	#imm = int(pipeline[0][16:31], 2)
+            	print("Imm: ", int(pipeline[0][16:31], 2))
+            	
+            	# Execution
+            	# 1) Get Values from register
+		# 2) Convert into integers (decimals) if needed
+		# 3) Operate
+		# 4) Store into register
+            	
             
 
 
             #################
 
             #LDW
-            elif pipeline[-1][0:6] == "001100":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001100":
+            	print(pipeline[0][0:6])
                 
             #STW
-            elif pipeline[-1][0:6] == "001101":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001101":
+            	print(pipeline[0][0:6])
                 
             #BZ
-            elif pipeline[-1][0:6] == "001110":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001110":
+            	print(pipeline[0][0:6])
                 
             #BEQ
-            elif pipeline[-1][0:6] == "001111":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "001111":
+            	print(pipeline[0][0:6])
                 
             #JR
-            elif pipeline[-1][0:6] == "010000":
-            	print(pipeline[-1][0:6]) 
+            elif pipeline[0][0:6] == "010000":
+            	print(pipeline[0][0:6]) 
             	
             #HALT
-            elif pipeline[-1][0:6] == "010001":
-            	print(pipeline[-1][0:6])
+            elif pipeline[0][0:6] == "010001":
+            	print(pipeline[0][0:6])
                 
             else:
-            	print(pipeline[-1][0:6])
+            	print(pipeline[0][0:6])
             	print("Invalid opcode entered for given command line: " + data)
             	continue
                 
