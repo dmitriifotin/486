@@ -28,7 +28,7 @@ while True:
         while True:
             #read file line by line
             data = file.readline()
-            print(data)
+            #print("Address read: " + data)
             #if file is empty, exit and ask for next file input
             if not data:
                 break
@@ -43,8 +43,9 @@ while True:
             #for commands that are not 8 or 9, unpack line into command and hex address
             else:
                 address = data.zfill(8)
-                print("Address Read: " + address) 
+                # replaces the newline at the end to empty
                 address = address.replace("\n", "")
+                print("Address Read: " + address) 
                 pipeline.append("")
                 
                 #convert address to binary
@@ -87,28 +88,64 @@ while True:
 
             #OR
             elif pipeline[-1][0:6] == "000110":
-            	print(pipeline[-1][0:6])
-
-                
+            	
+            	print("OR: " + pipeline[-1][0:6])
+            	#rs = 
+            	print("Rs: " + pipeline[-1][6:11])
+            	#rt = 
+            	print("Rt: " + pipeline[-1][11:16])
+            	#rd = 
+            	print("Rd: " + pipeline[-1][16:21])
+ 
             #ORI
             elif pipeline[-1][0:6] == "000111":
-            	print(pipeline[-1][0:6])
+            	print("ORi: " + pipeline[-1][0:6])
+            	#rs = 
+            	print("Rs: " + pipeline[-1][6:11])
+            	#rt = 
+            	print("Rt: " + pipeline[-1][11:16])
+            	#rd = 
+            	print("Imm: " + pipeline[-1][16:32])
                 
             #AND
             elif pipeline[-1][0:6] == "001000":
-            	print(pipeline[-1][0:6])
+            	print("AND: " + pipeline[-1][0:6])
+            	#rs = 
+            	print("Rs: " + pipeline[-1][6:11])
+            	#rt = 
+            	print("Rt: " + pipeline[-1][11:16])
+            	#rd = 
+            	print("Rd: " + pipeline[-1][16:21])
                 
             #ANDI
             elif pipeline[-1][0:6] == "001001":
-            	print(pipeline[-1][0:6])
+            	print("ANDi: " + pipeline[-1][0:6])
+            	#rs = 
+            	print("Rs: " + pipeline[-1][6:11])
+            	#rt = 
+            	print("Rt: " + pipeline[-1][11:16])
+            	#rd = 
+            	print("Imm: " + pipeline[-1][16:32])
                 
             #XOR
             elif pipeline[-1][0:6] == "001010":
-            	print(pipeline[-1][0:6])
+            	print("XOR: " + pipeline[-1][0:6])
+            	#rs = 
+            	print("Rs: " + pipeline[-1][6:11])
+            	#rt = 
+            	print("Rt: " + pipeline[-1][11:16])
+            	#rd = 
+            	print("Rd: " + pipeline[-1][16:22])
                 
             #XORI
             elif pipeline[-1][0:6] == "001011":
-            	print(pipeline[-1][0:6])
+            	print("XORi: " + pipeline[-1][0:6])
+            	#rs = 
+            	print("Rs: " + pipeline[-1][6:11])
+            	#rt = 
+            	print("Rt: " + pipeline[-1][11:16])
+            	#rd = 
+            	print("Imm: " + pipeline[-1][16:31])
             
 
 
