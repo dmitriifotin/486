@@ -10,6 +10,7 @@ while True:
     pipeline = []
     stalls = 0
     cycles = 0
+#<<<<<<< HEAD
 
     try:
         # open the specified file
@@ -33,7 +34,7 @@ while True:
                 
                 # ADD
                 if opcode == 0b000000:
-                	# Print the initial register contents
+                    # Print the initial register contents
                     print("\nADD:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
                     print("Source Register Contents (rs): ", rs)
@@ -41,19 +42,18 @@ while True:
                     print("Source Register Contents (rt): ", rt)
                     rd = pipeline[0][16:21]
                     print("Destination Register Contents: ", rd)
-                    
                     # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     rt_int = int(rt, 2)
                     rd_int = rs_int + rt_int
-                    
+
                     # Convert back to binary to display
                     rd = bin(rd_int)[2:].zfill(5)
                     print("Updated Destination Register Contents: ", rd)
                     
                 # ADDI
                 elif opcode == 0b000001:
-                	# Print the initial register contents
+                    # Print the initial register contents
                     print("\nADDI:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
                     print("Source Register Contents (rs):", rs)
@@ -61,19 +61,19 @@ while True:
                     print("Destination Register Contents:", rt)
                     imm = pipeline[0][16:]
                     print("Immediate Register Contents (imm):", imm)
-                    
+
                     # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     imm_int = int(imm, 2)
                     rt_int = rs_int + imm_int
-                    
+
                     # Convert back to binary to display
                     rt = bin(rt_int)[2:].zfill(5)
                     print("Updated Destination Register Contents:", rt)
                     
                 # SUB
                 elif opcode == 0b000010:
-                	# Print the initial register contents
+                    # Print the initial register contents
                     print("\nSUB:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
                     print("Source Register Contents (rs):", rs)
@@ -81,19 +81,19 @@ while True:
                     print("Source Register Contents (rt):", rt)
                     rd = pipeline[0][16:21]
                     print("Destination Register Contents:", rd)
-                    
+
                     # Convert to decimal to perform subtraction
                     rs_int = int(rs, 2)
                     rt_int = int(rt, 2)
                     rd_int = rs_int - rt_int
-                    
+
                     # Convert back to binary to display
                     rd = bin(rd_int)[2:].zfill(5)
                     print("Updated Destination Register Contents:", rd)
                     
                 # SUBI
                 elif opcode == 0b000011:
-                	# Print the initial register contents
+                    # Print the initial register contents
                     print("\nSUBI:", pipeline[0][:6])
                     rs = pipeline[0][6:11]
                     print("Source Register Contents (rs):", rs)
@@ -101,12 +101,12 @@ while True:
                     print("Destination Register Contents:", rt)
                     imm = pipeline[0][16:]
                     print("Immediate Register Contents (imm):", imm)
-                    
+
                     # Convert to decimal to perform addition
                     rs_int = int(rs, 2)
                     imm_int = int(imm, 2)
                     rt_int = rs_int - imm_int
-                    
+
                     # Convert back to binary to display
                     rt = bin(rt_int)[2:].zfill(5)
                     print("Updated Destination Register Contents:", rt)
@@ -121,12 +121,12 @@ while True:
                     print("Source Register Contents (rt):", rt)
                     rd = pipeline[0][16:21]
                     print("Destination Register Contents:", rd)
-                    
+
                     # Convert to decimal to perform subtraction
                     rs_int = int(rs, 2)
                     rt_int = int(rt, 2)
                     rd_int = rs_int * rt_int
-                    
+
                     # Convert back to binary to display
                     rd = bin(rd_int)[2:].zfill(5)
                     print("Updated Destination Register Contents:", rd)
@@ -153,30 +153,80 @@ while True:
                     
 #               ------------End Josh's Portion-------------
               
-                # OR
+             
+#               ------------John Michael's Portion-------------
+
+                #OR
                 elif opcode == 0b000110:
-                    print("OR command found:", pipeline[0][:6])
-                    
-                # ORI
+                    print("OR: " + pipeline[0][0:6])
+                    #rs = 
+                    print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
+                    #rt = 
+                    print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+                    #rd = 
+                    print("Rd: " + pipeline[0][16:21] + f' (R{int(pipeline[0][16:21], 2)})')
+
+
+                #ORI
                 elif opcode == 0b000111:
-                    print("ORI command found:", pipeline[0][:6])
-                    
-                # AND
+                    print("ORi: " + pipeline[0][0:6])
+                    #rs = 
+                    print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
+                    #rt = 
+                    print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+                    #imm = int(pipeline[0][16:31], 2)
+                    print("Imm: ", int(pipeline[0][16:31], 2))
+
+                #AND
                 elif opcode == 0b001000:
-                    print("AND command found:", pipeline[0][:6])
-                    
-                # ANDI
+                    print("AND: " + pipeline[0][0:6])
+                    #rs = 
+                    print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
+                    #rt = 
+                    print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+                    #rd = 
+                    print("Rd: " + pipeline[0][16:21] + f' (R{int(pipeline[0][16:21], 2)})')
+
+                #ANDI
                 elif opcode == 0b001001:
-                    print("ANDI command found:", pipeline[0][:6])
-                    
-                # XOR
+                    print("ANDi: " + pipeline[0][0:6])
+                    #rs = 
+                    print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
+                    #rt = 
+                    print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+                    #imm = int(pipeline[0][16:31], 2)
+                    print("Imm: ", int(pipeline[0][16:31], 2))
+
+                #XOR
                 elif opcode == 0b001010:
-                    print("XOR command found:", pipeline[0][:6])
-                    
-                # XORI
+                    print("XOR: " + pipeline[0][0:6])
+                    #rs = 
+                    print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
+                    #rt = 
+                    print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+                    #rd = 
+                    print("Rd: " + pipeline[0][16:22] + f' (R{int(pipeline[0][16:21], 2)})')
+
+                #XORI
                 elif opcode == 0b001011:
-                    print("XORI command found:", pipeline[0][:6])
-                    
+                    print("XORi: " + pipeline[0][0:6])
+                    #rs = 
+                    print("Rt: " + pipeline[0][6:11] + f' (R{int(pipeline[0][6:11], 2)})')
+                    #rt = 
+                    print("Rs: " + pipeline[0][11:16] + f' (R{int(pipeline[0][11:16], 2)})')
+                    #imm = int(pipeline[0][16:31], 2)
+                    print("Imm: ", int(pipeline[0][16:31], 2))
+
+                    # Execution
+                    # 1) Get Values from register
+                    # 2) Convert into integers (decimals) if needed
+                    # 3) Operate
+                    # 4) Store into register
+	                
+
+
+#               ------------End of John Michael's Portion-------------
+
                 # LDW
                 elif opcode == 0b001100:
                     print("LDW command found:", pipeline[0][:6])
@@ -210,3 +260,4 @@ while True:
                 break
     except FileNotFoundError:
         print("File not found. Please try again.")
+
