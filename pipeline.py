@@ -65,6 +65,10 @@ while True:
     data = ['0' for _ in range(1025)]
     ins_index = 0
     pc = 0
+    arith_cnt = 0
+    log_cnt = 0
+    mem_cnt = 0
+    ctrl_cnt = 0
     exit = 0
 
     try:
@@ -112,6 +116,7 @@ while True:
                     print("Updated Destination Register Contents: ", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    arith_cnt += 1
                     
                 # ADDI
                 elif opcode == 0b000001:
@@ -136,6 +141,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    arith_cnt += 1
                     
                 # SUB
                 elif opcode == 0b000010:
@@ -162,6 +168,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    arith_cnt += 1
                     
                 # SUBI
                 elif opcode == 0b000011:
@@ -186,6 +193,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    arith_cnt += 1
                     
                 # MUL
                 elif opcode == 0b000100:
@@ -210,6 +218,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    arith_cnt += 1
                     
                 # MULI
                 elif opcode == 0b000101:
@@ -234,6 +243,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    arith_cnt += 1
                     
                 # OR
                 elif opcode == 0b000110:
@@ -256,6 +266,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    log_cnt += 1
                     
                 # ORI
                 elif opcode == 0b000111:
@@ -279,6 +290,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    log_cnt += 1
                     
                 # AND
                 elif opcode == 0b001000:
@@ -301,6 +313,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    log_cnt += 1
                     
                 # ANDI
                 elif opcode == 0b001001:
@@ -324,6 +337,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    log_cnt += 1
                     
                 # XOR
                 elif opcode == 0b001010:
@@ -346,6 +360,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    log_cnt += 1
                     
                 # XORI
                 elif opcode == 0b001011:
@@ -369,6 +384,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    log_cnt += 1
                     
                 # LDW
                 elif opcode == 0b001100:
@@ -392,6 +408,7 @@ while True:
                     print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    mem_cnt += 1
                     
                 # STW
                 elif opcode == 0b001101:
@@ -414,6 +431,7 @@ while True:
                     print("Updated Destination Register Contents:", data[(bin_to_int(register[rs], bit_length) + imm)//4])
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    mem_cnt += 1
                     
                 # BZ
                 elif opcode == 0b001110:
@@ -441,6 +459,7 @@ while True:
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    ctrl_cnt += 1
                     
                 # BEQ
                 elif opcode == 0b001111:
@@ -468,6 +487,7 @@ while True:
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
                     cycles += 1
+                    ctrl_cnt += 1
                     
                 # JR
                 elif opcode == 0b010000:
@@ -491,18 +511,47 @@ while True:
                     shift(pipeline, writ_reg)
                     #stalls += 2
                     cycles += 3
+                    ctrl_cnt += 1
                     
                 # HALT
                 elif opcode == 0b010001:
                     print("HALT:", int_to_bin(opcode, opcode_bit_length), "\nProgram halted\n\n")
                     exit = 1
                     cycles += 5
+                    ctrl_cnt += 1
                     print("Cycles: ", cycles, " Stalls: ", stalls)
                     
                 else:
                     print("Invalid opcode entered for given command line: " + data)
                     continue
-                
+            
+            total_instr = arith_cnt + log_cnt + mem_cnt + ctrl_cnt
+        
+            print("Instruction counts:")
+            print("\nTotal number of instructions: ", total_instr)
+            print("Arithmetic instructions: ", arith_cnt)
+            print("Logical Instructions: ", log_cnt)
+            print("Memory access instructions: ", mem_cnt)
+            print("Control transfer instructions: ", ctrl_cnt)
+            print("\nFinal Register State:\n")
+            print("Program Counter: ", pc)
+#            print(register)
+            i = 0
+            for reg in register:
+                if reg != '0':
+                    print(f'R{i} :', bin_to_int(reg, bit_length))
+                i += 1
+            print("Total Stalls: ", stalls)
+            i = 0
+            for d in data:
+                if d.startswith('0x'):
+                    print("Address:", i*4, ",Contents:",int(d,16))
+                i += 1
+            print("\nTiming Simulator:\n")
+            print("Total number of clock cycles: ", cycles)
+            print("\nProgram halted\n\n")
+          #  print(data)
+            
             print("End of file reached")
             if input("Exit program? y/n\n") == 'y':
                 break
