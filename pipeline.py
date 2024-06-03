@@ -42,7 +42,7 @@ def check_gap(rs, rt, writ_reg, pipeline, print_message):
             if gap == 3 or gap == 4:
                 gap = 0
             
-            print ("GAP: ", gap)
+            if err: print ("GAP: ", gap)
             return gap
 
 while True:
@@ -70,6 +70,8 @@ while True:
     mem_cnt = 0
     ctrl_cnt = 0
     exit = 0
+    
+    err = 0
 
     try:
         # open the specified file
@@ -86,17 +88,17 @@ while True:
                 
                 # convert command to binary
                 address = data[pc//4].zfill(8)
-                print(address, end=' ')
+                if err: print(address, end=' ')
                 pipeline[0] = ''.join(bin(int(char, 16))[2:].zfill(4) for char in address)
                 # Check commands
                 opcode = int(pipeline[0][:6], 2)
-                print("STALLS: ", stalls)
+                if err: print("STALLS: ", stalls)
                 pc += 4
                 
                 # ADD
                 if opcode == 0b000000:
                 	# Print the initial register contents
-                    print("ADD:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("ADD:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
@@ -104,16 +106,16 @@ while True:
                     writ_reg[0] = rd
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " RD ", rd, bin_to_int(register[rd], bit_length))
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " RD ", rd, bin_to_int(register[rd], bit_length))
                     
                     # Convert to decimal to perform addition
                     register[rd] = int_to_bin(bin_to_int(register[rs], bit_length) + bin_to_int(register[rt], bit_length), bit_length)
                     
-                    print("Updated Destination Register Contents: ", bin_to_int(register[rd], bit_length))
+                    if err: print("Updated Destination Register Contents: ", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     arith_cnt += 1
@@ -121,24 +123,24 @@ while True:
                 # ADDI
                 elif opcode == 0b000001:
                 	# Print the initial register contents
-                    print("ADDI:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("ADDI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
 
                     # Convert to decimal to perform addition
                     register[rt] = int_to_bin(bin_to_int(register[rs], bit_length) + imm, bit_length)
 
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     arith_cnt += 1
@@ -146,7 +148,7 @@ while True:
                 # SUB
                 elif opcode == 0b000010:
                 	# Print the initial register contents
-                    print("SUB:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("SUB:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     rd = int(pipeline[0][16:21], 2)
@@ -154,18 +156,18 @@ while True:
                     writ_reg[0] = rd
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                             
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " RD ", rd, bin_to_int(register[rd], bit_length))
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " RD ", rd, bin_to_int(register[rd], bit_length))
 
                     # Convert to decimal to perform subtraction
                     register[rd] = int_to_bin(bin_to_int(register[rs], bit_length) - bin_to_int(register[rt], bit_length), bit_length)
                     
                     # Convert back to binary to display
                     
-                    print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     arith_cnt += 1
@@ -173,24 +175,24 @@ while True:
                 # SUBI
                 elif opcode == 0b000011:
                 	# Print the initial register contents
-                    print("SUBI:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("SUBI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
 
                     # Convert to decimal to perform addition
                     register[rt] = int_to_bin(bin_to_int(register[rs], bit_length) - imm, bit_length)
                     
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     arith_cnt += 1
@@ -198,24 +200,24 @@ while True:
                 # MUL
                 elif opcode == 0b000100:
                 	# Print the initial register contents
-                    print("MUL:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("MUL:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     rd = int(pipeline[0][16:21], 2)
                     writ_reg[0] = rd
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " RD ", rd, bin_to_int(register[rd], bit_length))
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " RD ", rd, bin_to_int(register[rd], bit_length))
 
                     # Convert to decimal to perform subtraction
                     register[rd] = int_to_bin(bin_to_int(register[rs], bit_length) * bin_to_int(register[rt], bit_length), bit_length)
                     
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     arith_cnt += 1
@@ -223,24 +225,24 @@ while True:
                 # MULI
                 elif opcode == 0b000101:
                 	# Print the initial register contents
-                    print("MULI:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("MULI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
 
                     # Convert to decimal to perform addition
                     register[rt] = int_to_bin(bin_to_int(register[rs], bit_length) * imm, bit_length)
                     
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     arith_cnt += 1
@@ -248,46 +250,46 @@ while True:
                 # OR
                 elif opcode == 0b000110:
                     # Print the initial register contents
-                    print("OR:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("OR:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     rd = int(pipeline[0][16:21], 2)
                     writ_reg[0] = rd
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, register[rs], " RT ", rt, register[rt], " RD ", rd, register[rd])
+                    if err: print("RS ", rs, register[rs], " RT ", rt, register[rt], " RD ", rd, register[rd])
 
                     register[rd] = int_to_bin(bin_to_int(register[rs], bit_length) | bin_to_int(register[rt], bit_length), bit_length)
                     
-                    print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     log_cnt += 1
                     
                 # ORI
                 elif opcode == 0b000111:
-                    print("ORI:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("ORI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, register[rs], " RT ", rt, register[rt], " Imm ", imm)
+                    if err: print("RS ", rs, register[rs], " RT ", rt, register[rt], " Imm ", imm)
 
                     # Convert to decimal to perform addition
                     register[rt] = int_to_bin(bin_to_int(register[rs], bit_length) | imm, bit_length)
                     
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     log_cnt += 1
@@ -295,46 +297,46 @@ while True:
                 # AND
                 elif opcode == 0b001000:
                     # Print the initial register contents
-                    print("AND:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("AND:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     rd = int(pipeline[0][16:21], 2)
                     writ_reg[0] = rd
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, register[rs], " RT ", rt, register[rt], " RD ", rd, register[rd])
+                    if err: print("RS ", rs, register[rs], " RT ", rt, register[rt], " RD ", rd, register[rd])
 
                     register[rd] = int_to_bin(bin_to_int(register[rs], bit_length) & bin_to_int(register[rt], bit_length), bit_length)
                     
-                    print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     log_cnt += 1
                     
                 # ANDI
                 elif opcode == 0b001001:
-                    print("ANDI:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("ANDI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, register[rs], " RT ", rt, register[rt], " Imm ", imm)
+                    if err: print("RS ", rs, register[rs], " RT ", rt, register[rt], " Imm ", imm)
 
                     # Convert to decimal to perform addition
                     register[rt] = int_to_bin(bin_to_int(register[rs], bit_length) & imm, bit_length)
                     
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     log_cnt += 1
@@ -342,53 +344,53 @@ while True:
                 # XOR
                 elif opcode == 0b001010:
                     # Print the initial register contents
-                    print("XOR:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("XOR:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     rd = int(pipeline[0][16:21], 2)
                     writ_reg[0] = rd
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, register[rs], " RT ", rt, register[rt], " RD ", rd, register[rd])
+                    if err: print("RS ", rs, register[rs], " RT ", rt, register[rt], " RD ", rd, register[rd])
 
                     register[rd] = int_to_bin(bin_to_int(register[rs], bit_length) ^ bin_to_int(register[rt], bit_length), bit_length)
                     
-                    print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rd], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     log_cnt += 1
                     
                 # XORI
                 elif opcode == 0b001011:
-                    print("XORI:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("XORI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, register[rs], " RT ", rt, register[rt], " Imm ", imm)
+                    if err: print("RS ", rs, register[rs], " RT ", rt, register[rt], " Imm ", imm)
 
                     # Convert to decimal to perform addition
                     register[rt] = int_to_bin(bin_to_int(register[rs], bit_length) ^ imm, bit_length)
                     
                     # Convert back to binary to display
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     log_cnt += 1
                     
                 # LDW
                 elif opcode == 0b001100:
-                    print("LDW:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("LDW:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
@@ -400,19 +402,19 @@ while True:
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
-                    print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
+                    if err: print("Updated Destination Register Contents:", bin_to_int(register[rt], bit_length))
                     shift(pipeline, writ_reg)
                     cycles += 1
                     mem_cnt += 1
                     
                 # STW
                 elif opcode == 0b001101:
-                    print("STW:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("STW:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
@@ -423,38 +425,38 @@ while True:
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
-                    print("Updated Destination Register Contents:", data[(bin_to_int(register[rs], bit_length) + imm)//4])
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
+                    if err: print("Updated Destination Register Contents:", data[(bin_to_int(register[rs], bit_length) + imm)//4])
                     shift(pipeline, writ_reg)
                     cycles += 1
                     mem_cnt += 1
                     
                 # BZ
                 elif opcode == 0b001110:
-                    print("BZ:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("BZ:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length)
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " Imm ", imm)
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " Imm ", imm)
                     
                     writ_reg[0] = -1
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                         
                     if register[rs] == int_to_bin(0, bit_length):
                         pc += (imm - 1) * 4
-                        print("Going to instruction: ", data[pc//4], " on line: ", pc//4)
+                        if err: print("Going to instruction: ", data[pc//4], " on line: ", pc//4)
                         cycles += 2
                         
                     else:
-                        print("Proceeding without branching\n")
+                        if err: print("Proceeding without branching\n")
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
@@ -463,26 +465,26 @@ while True:
                     
                 # BEQ
                 elif opcode == 0b001111:
-                    print("BEQ:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("BEQ:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
                     imm = bin_to_int(pipeline[0][16:], bit_length) - 1
-                    print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
+                    if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
                     
                     writ_reg[0] = -1
                     if rt in writ_reg or rs in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
-                        print("Dependency: ", gap)
+                        if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
                     
                     if register[rs] == register[rt]:
                         pc += imm * 4
-                        print("Going to instruction: ", data[pc//4], " on line: ", pc//4)
+                        if err: print("Going to instruction: ", data[pc//4], " on line: ", pc//4)
                         cycles += 2
                     else:
-                        print("Proceeding without branching\n")
+                        if err: print("Proceeding without branching\n")
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
@@ -491,10 +493,10 @@ while True:
                     
                 # JR
                 elif opcode == 0b010000:
-                    print("JR:", int_to_bin(opcode, opcode_bit_length), end=' ')
+                    if err: print("JR:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
-                    print("Source Register (rs): ", rs, bin_to_int(register[rs], bit_length))
+                    if err: print("Source Register (rs): ", rs, bin_to_int(register[rs], bit_length))
                     
                     writ_reg[0] = -1
                     if rs in writ_reg:
@@ -505,7 +507,7 @@ while True:
                     
                     pc = bin_to_int(register[rs], bit_length)
                     
-                    print("Going to instruction: ", data[pc//4], " on line: ", pc//4)
+                    if err: print("Going to instruction: ", data[pc//4], " on line: ", pc//4)
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
                     shift(pipeline, writ_reg)
@@ -515,11 +517,11 @@ while True:
                     
                 # HALT
                 elif opcode == 0b010001:
-                    print("HALT:", int_to_bin(opcode, opcode_bit_length), "\nProgram halted\n\n")
+                    if err: print("HALT:", int_to_bin(opcode, opcode_bit_length), "\nProgram halted\n\n")
                     exit = 1
                     cycles += 5
                     ctrl_cnt += 1
-                    print("Cycles: ", cycles, " Stalls: ", stalls)
+                    #print("Cycles: ", cycles, " Stalls: ", stalls)
                     
                 else:
                     print("Invalid opcode entered for given command line: " + data)
@@ -528,27 +530,29 @@ while True:
             total_instr = arith_cnt + log_cnt + mem_cnt + ctrl_cnt
         
             print("Instruction counts:")
-            print("\nTotal number of instructions: ", total_instr)
-            print("Arithmetic instructions: ", arith_cnt)
-            print("Logical Instructions: ", log_cnt)
-            print("Memory access instructions: ", mem_cnt)
-            print("Control transfer instructions: ", ctrl_cnt)
+            print("\nTotal number of instructions:", total_instr)
+            print("Arithmetic instructions:", arith_cnt)
+            print("Logical Instructions:", log_cnt)
+            print("Memory access instructions:", mem_cnt)
+            print("Control transfer instructions:", ctrl_cnt)
             print("\nFinal Register State:\n")
-            print("Program Counter: ", pc)
+            print("Program Counter:", pc)
 #            print(register)
             i = 0
             for reg in register:
                 if reg != '0':
-                    print(f'R{i} :', bin_to_int(reg, bit_length))
+                    print(f'R{i}:', bin_to_int(reg, bit_length))
                 i += 1
-            print("Total Stalls: ", stalls)
+            
             i = 0
             for d in data:
                 if d.startswith('0x'):
-                    print("Address:", i*4, ",Contents:",int(d,16))
+                    print("Address:", i*4,"Contents:",int(d,16))
                 i += 1
-            print("\nTiming Simulator:\n")
-            print("Total number of clock cycles: ", cycles)
+            if print_message == '2' or print_message == '3':
+                print("\nTiming Simulator:\n")
+                print("Total number of clock cycles: ", cycles)
+                print("Total Stalls: ", stalls)
             print("\nProgram halted\n\n")
           #  print(data)
             
