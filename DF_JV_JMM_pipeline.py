@@ -59,6 +59,7 @@ while True:
     writ_reg = [-1 for _ in range(5)]
     pipeline_index = 0
     bit_length = 32
+    imm_bit_length = 16
     opcode_bit_length = 6
     stalls = 0
     cycles = 0
@@ -71,7 +72,7 @@ while True:
     ctrl_cnt = 0
     exit = 0
     
-    err = 0
+    err = 1
 
     try:
         # open the specified file
@@ -126,7 +127,7 @@ while True:
                     if err: print("ADDI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
@@ -178,7 +179,7 @@ while True:
                     if err: print("SUBI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
@@ -228,7 +229,7 @@ while True:
                     if err: print("MULI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
@@ -275,7 +276,7 @@ while True:
                     if err: print("ORI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
@@ -322,7 +323,7 @@ while True:
                     if err: print("ANDI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
@@ -369,7 +370,7 @@ while True:
                     if err: print("XORI:", int_to_bin(opcode, opcode_bit_length))
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
@@ -394,7 +395,7 @@ while True:
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     
                     address = data[(bin_to_int(register[rs], bit_length) + imm)//4].zfill(8)
                     register[rt] = ''.join(bin(int(char, 16))[2:].zfill(4) for char in address)
@@ -418,7 +419,7 @@ while True:
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     
                     data[(bin_to_int(register[rs], bit_length) + imm)//4] = str(hex(bin_to_int(register[rt], bit_length)))
                     
@@ -440,7 +441,7 @@ while True:
                     if err: print("BZ:", int_to_bin(opcode, opcode_bit_length))
                     
                     rs = int(pipeline[0][6:11], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length)
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length)
                     if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " Imm ", imm)
                     
                     writ_reg[0] = -1
@@ -469,7 +470,7 @@ while True:
                     
                     rs = int(pipeline[0][6:11], 2)
                     rt = int(pipeline[0][11:16], 2)
-                    imm = bin_to_int(pipeline[0][16:], bit_length) - 1
+                    imm = bin_to_int(pipeline[0][16:], imm_bit_length) - 1
                     if err: print("RS ", rs, bin_to_int(register[rs], bit_length), " RT ", rt, bin_to_int(register[rt], bit_length), " Imm ", imm)
                     
                     writ_reg[0] = -1
