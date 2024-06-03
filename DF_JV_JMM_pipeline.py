@@ -72,7 +72,7 @@ while True:
     ctrl_cnt = 0
     exit = 0
     
-    err = 1
+    err = 0
 
     try:
         # open the specified file
