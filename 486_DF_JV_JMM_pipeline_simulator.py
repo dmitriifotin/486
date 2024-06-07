@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+
+"""
+@author: 
+    Dmitrii Fotin       <dfotin@pdx.edu>
+    John Michael Mertz  <jmertz@pdx.edu>  
+    Josh Varughese       <jv23@pdx.edu>
+"""
+
 def bin_to_int(val, bit_length):
     if val[0] == '0':
         return int(val, 2)
