@@ -71,6 +71,7 @@ while True:
     mem_cnt = 0
     ctrl_cnt = 0
     exit = 0
+    gap_count = 0
     
     err = 0
 
@@ -108,6 +109,7 @@ while True:
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -132,6 +134,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -158,6 +161,7 @@ while True:
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                             
@@ -184,6 +188,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -209,6 +214,7 @@ while True:
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -233,6 +239,7 @@ while True:
                     writ_reg[0] = rt
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
+                        if gap > 0: gap_count += 1
                         if err: print("Dependency: ", gap)
                         stalls += gap
                         cycles += gap
@@ -259,6 +266,7 @@ while True:
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -281,6 +289,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -306,6 +315,7 @@ while True:
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -328,6 +338,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -353,6 +364,7 @@ while True:
                     if rs in writ_reg or rt in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -375,6 +387,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -404,6 +417,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -427,6 +441,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -448,6 +463,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                         
@@ -477,6 +493,7 @@ while True:
                     if rt in writ_reg or rs in writ_reg:
                         gap = check_gap(rs, rt, writ_reg, pipeline, print_message)
                         if err: print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -503,6 +520,7 @@ while True:
                     if rs in writ_reg:
                         gap = check_gap(rs, 0, writ_reg, pipeline, print_message)
                         print("Dependency: ", gap)
+                        if gap > 0: gap_count += 1
                         stalls += gap
                         cycles += gap
                     
@@ -558,6 +576,7 @@ while True:
           #  print(data)
             
             print("End of file reached")
+            print("Hazard count: ", gap_count)
             if input("Exit program? y/n\n") == 'y':
                 break
     except FileNotFoundError:
